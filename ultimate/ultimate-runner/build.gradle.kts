@@ -1,4 +1,7 @@
 
+/*
+
+
 apply { plugin("kotlin") }
 
 dependencies {
@@ -22,3 +25,7 @@ if (intellijUltimateEnabled) {
         shouldRunAfter(":ultimate:ideaUltimatePlugin")
     }
 }
+
+
+
+*/
