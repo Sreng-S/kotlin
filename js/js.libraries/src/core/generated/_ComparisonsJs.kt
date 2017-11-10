@@ -26,7 +26,7 @@ public fun <T: Comparable<T>> maxOf(a: T, b: T): T {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Byte, b: Byte): Byte {
-    return Math.max(a.toInt(), b.toInt()).toByte()
+    return kotlin.js.Math.max(a.toInt(), b.toInt()).toByte()
 }
 
 /**
@@ -35,7 +35,7 @@ public inline fun maxOf(a: Byte, b: Byte): Byte {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Short, b: Short): Short {
-    return Math.max(a.toInt(), b.toInt()).toShort()
+    return kotlin.js.Math.max(a.toInt(), b.toInt()).toShort()
 }
 
 /**
@@ -44,16 +44,16 @@ public inline fun maxOf(a: Short, b: Short): Short {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Int, b: Int): Int {
-    return Math.max(a, b)
+    return kotlin.js.Math.max(a, b)
 }
 
 /**
  * Returns the greater of two values.
  */
 @SinceKotlin("1.1")
-@kotlin.internal.InlineOnly
+@Suppress("NOTHING_TO_INLINE")
 public inline fun maxOf(a: Long, b: Long): Long {
-    return Math.max(a, b)
+    return if (a >= b) a else b
 }
 
 /**
@@ -62,7 +62,7 @@ public inline fun maxOf(a: Long, b: Long): Long {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Float, b: Float): Float {
-    return Math.max(a, b)
+    return kotlin.js.Math.max(a, b)
 }
 
 /**
@@ -71,7 +71,7 @@ public inline fun maxOf(a: Float, b: Float): Float {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Double, b: Double): Double {
-    return Math.max(a, b)
+    return kotlin.js.Math.max(a, b)
 }
 
 /**
@@ -88,7 +88,7 @@ public fun <T: Comparable<T>> maxOf(a: T, b: T, c: T): T {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Byte, b: Byte, c: Byte): Byte {
-    return Math.max(a.toInt(), Math.max(b.toInt(), c.toInt())).toByte()
+    return kotlin.js.Math.max(a.toInt(), b.toInt(), c.toInt()).toByte()
 }
 
 /**
@@ -97,7 +97,7 @@ public inline fun maxOf(a: Byte, b: Byte, c: Byte): Byte {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Short, b: Short, c: Short): Short {
-    return Math.max(a.toInt(), Math.max(b.toInt(), c.toInt())).toShort()
+    return kotlin.js.Math.max(a.toInt(), b.toInt(), c.toInt()).toShort()
 }
 
 /**
@@ -106,7 +106,7 @@ public inline fun maxOf(a: Short, b: Short, c: Short): Short {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Int, b: Int, c: Int): Int {
-    return maxOf(a, maxOf(b, c))
+    return kotlin.js.Math.max(a, b, c)
 }
 
 /**
@@ -124,7 +124,7 @@ public inline fun maxOf(a: Long, b: Long, c: Long): Long {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Float, b: Float, c: Float): Float {
-    return maxOf(a, maxOf(b, c))
+    return kotlin.js.Math.max(a, b, c)
 }
 
 /**
@@ -133,7 +133,7 @@ public inline fun maxOf(a: Float, b: Float, c: Float): Float {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Double, b: Double, c: Double): Double {
-    return maxOf(a, maxOf(b, c))
+    return kotlin.js.Math.max(a, b, c)
 }
 
 /**
@@ -168,7 +168,7 @@ public fun <T: Comparable<T>> minOf(a: T, b: T): T {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Byte, b: Byte): Byte {
-    return Math.min(a.toInt(), b.toInt()).toByte()
+    return kotlin.js.Math.min(a.toInt(), b.toInt()).toByte()
 }
 
 /**
@@ -177,7 +177,7 @@ public inline fun minOf(a: Byte, b: Byte): Byte {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Short, b: Short): Short {
-    return Math.min(a.toInt(), b.toInt()).toShort()
+    return kotlin.js.Math.min(a.toInt(), b.toInt()).toShort()
 }
 
 /**
@@ -186,16 +186,16 @@ public inline fun minOf(a: Short, b: Short): Short {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Int, b: Int): Int {
-    return Math.min(a, b)
+    return kotlin.js.Math.min(a, b)
 }
 
 /**
  * Returns the smaller of two values.
  */
 @SinceKotlin("1.1")
-@kotlin.internal.InlineOnly
+@Suppress("NOTHING_TO_INLINE")
 public inline fun minOf(a: Long, b: Long): Long {
-    return Math.min(a, b)
+    return if (a <= b) a else b
 }
 
 /**
@@ -204,7 +204,7 @@ public inline fun minOf(a: Long, b: Long): Long {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Float, b: Float): Float {
-    return Math.min(a, b)
+    return kotlin.js.Math.min(a, b)
 }
 
 /**
@@ -213,7 +213,7 @@ public inline fun minOf(a: Float, b: Float): Float {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Double, b: Double): Double {
-    return Math.min(a, b)
+    return kotlin.js.Math.min(a, b)
 }
 
 /**
@@ -230,7 +230,7 @@ public fun <T: Comparable<T>> minOf(a: T, b: T, c: T): T {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Byte, b: Byte, c: Byte): Byte {
-    return Math.min(a.toInt(), Math.min(b.toInt(), c.toInt())).toByte()
+    return kotlin.js.Math.min(a.toInt(), b.toInt(), c.toInt()).toByte()
 }
 
 /**
@@ -239,7 +239,7 @@ public inline fun minOf(a: Byte, b: Byte, c: Byte): Byte {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Short, b: Short, c: Short): Short {
-    return Math.min(a.toInt(), Math.min(b.toInt(), c.toInt())).toShort()
+    return kotlin.js.Math.min(a.toInt(), b.toInt(), c.toInt()).toShort()
 }
 
 /**
@@ -248,7 +248,7 @@ public inline fun minOf(a: Short, b: Short, c: Short): Short {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Int, b: Int, c: Int): Int {
-    return minOf(a, minOf(b, c))
+    return kotlin.js.Math.min(a, b, c)
 }
 
 /**
@@ -266,7 +266,7 @@ public inline fun minOf(a: Long, b: Long, c: Long): Long {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Float, b: Float, c: Float): Float {
-    return minOf(a, minOf(b, c))
+    return kotlin.js.Math.min(a, b, c)
 }
 
 /**
@@ -275,7 +275,7 @@ public inline fun minOf(a: Float, b: Float, c: Float): Float {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Double, b: Double, c: Double): Double {
-    return minOf(a, minOf(b, c))
+    return kotlin.js.Math.min(a, b, c)
 }
 
 /**
