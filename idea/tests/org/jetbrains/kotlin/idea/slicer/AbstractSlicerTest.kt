@@ -56,13 +56,11 @@ abstract class AbstractSlicerTest : KotlinLightCodeInsightFixtureTestCase() {
                 return text
             }
 
-            fun SliceNode.isSliceLeafValueClassNode() = javaClass.name == "com.intellij.slicer.SliceLeafValueClassNode"
-
             fun process(node: SliceNode, indent: Int): String {
-                val usage = node.element!!.value
+                val usage = node.element!!.value as KotlinSliceUsage
 
                 node.calculateDupNode()
-                val isDuplicated = !node.isSliceLeafValueClassNode() && node.duplicate != null
+                val isDuplicated = node.duplicate != null
 
                 return buildString {
                     when {
@@ -70,8 +68,6 @@ abstract class AbstractSlicerTest : KotlinLightCodeInsightFixtureTestCase() {
                             node.children.forEach { append(process(it, indent)) }
                             return@buildString
                         }
-                        // SliceLeafValueClassNode is package-private
-                        node.isSliceLeafValueClassNode() -> append("[${node.nodeText}]\n")
                         else -> {
                             val chunks = usage.text
                             append(chunks.first().render() + " ")
@@ -79,9 +75,7 @@ abstract class AbstractSlicerTest : KotlinLightCodeInsightFixtureTestCase() {
                             if (usage is KotlinSliceDereferenceUsage) {
                                 append("DEREFERENCE: ")
                             }
-                            if (usage is KotlinSliceUsage) {
-                                append("[LAMBDA] ".repeat(usage.lambdaLevel))
-                            }
+                            append("[LAMBDA] ".repeat(usage.lambdaLevel))
                             chunks.slice(1..chunks.size - 1).joinTo(
                                     this,
                                     separator = "",
