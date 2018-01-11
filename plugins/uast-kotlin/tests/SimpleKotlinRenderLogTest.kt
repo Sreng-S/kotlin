@@ -64,7 +64,4 @@ class SimpleKotlinRenderLogTest : AbstractKotlinRenderLogTest() {
 
     @Test
     fun testClassAnnotation() = doTest("ClassAnnotation")
-
-    @Test
-    fun testReceiverFun() = doTest("ReceiverFun")
 }
