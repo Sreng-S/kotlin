@@ -141,8 +141,18 @@ abstract class AbstractDiagnosticsTest : BaseDiagnosticsTest() {
         }
 
         var exceptionFromDescriptorValidation: Throwable? = null
+        val originalTestFile = testDataFile.readText()
         try {
-            val expectedFile = getExpectedDescriptorFile(testDataFile, files)
+            val postfix = when {
+                InTextDirectivesUtils.isDirectiveDefined(originalTestFile, "// JAVAC_EXPECTED_FILE") &&
+                environment.configuration.getBoolean(JVMConfigurationKeys.USE_JAVAC) -> ".javac.txt"
+
+                InTextDirectivesUtils.isDirectiveDefined(originalTestFile, "// NI_EXPECTED_FILE") &&
+                files.any { it.newInferenceEnabled } && !USE_OLD_INFERENCE_DIAGNOSTICS_FOR_NI -> ".ni.txt"
+
+                else -> ".txt"
+            }
+            val expectedFile = File(FileUtil.getNameWithoutExtension(testDataFile.absolutePath) + postfix)
             validateAndCompareDescriptorWithFile(expectedFile, files, modules)
         }
         catch (e: Throwable) {
@@ -180,7 +190,7 @@ abstract class AbstractDiagnosticsTest : BaseDiagnosticsTest() {
             exceptionFromDynamicCallDescriptorsValidation = e
         }
 
-        KotlinTestUtils.assertEqualsToFile(getExpectedDiagnosticsFile(testDataFile), actualText.toString())
+        KotlinTestUtils.assertEqualsToFile(testDataFile, actualText.toString())
 
         assertTrue("Diagnostics mismatch. See the output above", ok)
 
@@ -190,26 +200,6 @@ abstract class AbstractDiagnosticsTest : BaseDiagnosticsTest() {
         exceptionFromDynamicCallDescriptorsValidation?.let { throw it }
 
         performAdditionalChecksAfterDiagnostics(testDataFile, files, groupedByModule, modules, moduleBindings)
-    }
-
-    protected open fun getExpectedDiagnosticsFile(testDataFile: File): File {
-        return testDataFile
-    }
-
-    protected open fun getExpectedDescriptorFile(testDataFile: File, files: List<TestFile>): File {
-        val originalTestFileText = testDataFile.readText()
-
-        val postfix = when {
-            InTextDirectivesUtils.isDirectiveDefined(originalTestFileText, "// JAVAC_EXPECTED_FILE") &&
-            environment.configuration.getBoolean(JVMConfigurationKeys.USE_JAVAC) -> ".javac.txt"
-
-            InTextDirectivesUtils.isDirectiveDefined(originalTestFileText, "// NI_EXPECTED_FILE") &&
-            files.any { it.newInferenceEnabled } && !USE_OLD_INFERENCE_DIAGNOSTICS_FOR_NI -> ".ni.txt"
-
-            else -> ".txt"
-        }
-
-        return File(FileUtil.getNameWithoutExtension(testDataFile.absolutePath) + postfix)
     }
 
     protected open fun performAdditionalChecksAfterDiagnostics(
