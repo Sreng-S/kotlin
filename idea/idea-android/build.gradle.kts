@@ -24,7 +24,7 @@ dependencies {
 
     compileOnly(intellijDep()) { includeJars("openapi", "idea", "extensions", "util", "guava", "android-base-common", rootProject = rootProject) }
     compileOnly(intellijPluginDep("android")) {
-        includeJars("android", "android-common", "common", "sdk-common", "sdklib", "sdk-tools", "layoutlib-api")
+        includeJars("android", "android-common", "common", "sdk-common", "sdklib", "sdk-tools", "layoutlib-api", rootProject = rootProject)
     }
 
     testCompile(projectDist(":kotlin-test:kotlin-test-jvm"))
