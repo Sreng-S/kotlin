@@ -125,7 +125,7 @@ class KaptJavaLog(
     }
 
     private fun String.stripCompilerKeyPrefix(): String {
-        for (kind in listOf("err", "warn", "misc")) {
+        for (kind in listOf("err", "warn", "misc", "note")) {
             val prefix = "compiler.$kind."
             if (startsWith(prefix)) {
                 return drop(prefix.length)
