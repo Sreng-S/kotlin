@@ -160,9 +160,9 @@ abstract class KaptIncrementalBaseIT(val shouldUseStubs: Boolean, val useKapt3: 
                 assertFileExists("$kapt3IncDataPath/bar/B.class")
                 assertFileExists("$kapt3IncDataPath/bar/UseBKt.class")
                 assertFileExists("$kapt3StubsPath/bar/B.java")
-                assertFileExists("$kapt3StubsPath/bar/B.kaptMetadata")
+                assertFileExists("$kapt3StubsPath/bar/B.kapt_metadata")
                 assertFileExists("$kapt3StubsPath/bar/UseBKt.java")
-                assertFileExists("$kapt3StubsPath/bar/UseBKt.kaptMetadata")
+                assertFileExists("$kapt3StubsPath/bar/UseBKt.kapt_metadata")
             }
         }
 

@@ -31,12 +31,13 @@ private typealias LineInfoMap = MutableMap<String, KotlinPosition>
 
 class KaptLineMappingCollector(private val kaptContext: KaptContext<*>) {
     companion object {
-        const val KAPT_METADATA_EXTENSION = ".kaptMetadata"
+        const val KAPT_METADATA_EXTENSION = ".kapt_metadata"
         private const val METADATA_VERSION = 1
 
         fun parseFileInfo(file: JCTree.JCCompilationUnit): FileInfo {
-            val sourceUri = file.sourcefile.toUri()
-                ?.takeIf { it.isAbsolute && !it.isOpaque && it.path != null } ?: return FileInfo.EMPTY
+            val sourceUri = file.sourcefile
+                ?.toUri()
+                ?.takeIf { it.isAbsolute && !it.isOpaque && it.path != null && it.scheme?.toLowerCase() == "file" } ?: return FileInfo.EMPTY
 
             val sourceFile = File(sourceUri).takeIf { it.exists() } ?: return FileInfo.EMPTY
             val kaptMetadataFile = File(sourceFile.parentFile, sourceFile.nameWithoutExtension + KAPT_METADATA_EXTENSION)
