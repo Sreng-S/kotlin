@@ -64,7 +64,6 @@ import org.jetbrains.kotlin.idea.debugger.DebuggerUtils
 import org.jetbrains.kotlin.idea.debugger.evaluate.KotlinDebuggerCaches.CompiledDataDescriptor
 import org.jetbrains.kotlin.idea.debugger.evaluate.KotlinDebuggerCaches.ParametersDescriptor
 import org.jetbrains.kotlin.idea.debugger.evaluate.classLoading.ClassToLoad
-import org.jetbrains.kotlin.idea.debugger.evaluate.compilingEvaluator.loadClasses
 import org.jetbrains.kotlin.idea.debugger.evaluate.compilingEvaluator.loadClassesSafely
 import org.jetbrains.kotlin.idea.refactoring.introduce.extractionEngine.ExtractionResult
 import org.jetbrains.kotlin.idea.runInReadActionWithWriteActionPriorityWithPCE
@@ -141,10 +140,10 @@ class KotlinEvaluator(val codeFragment: KtCodeFragment, val sourcePosition: Sour
                 extractAndCompile(fragment, position, context)
             }
 
-            val classLoaderHandler = loadClassesSafely(context, compiledData.classes)
+            val classLoaderRef = loadClassesSafely(context, compiledData.classes)
 
-            val result = if (classLoaderHandler != null) {
-                evaluateWithCompilation(context, compiledData, classLoaderHandler.reference) ?: runEval4j(context, compiledData)
+            val result = if (classLoaderRef != null) {
+                evaluateWithCompilation(context, compiledData, classLoaderRef) ?: runEval4j(context, compiledData)
             }
             else {
                 runEval4j(context, compiledData)
@@ -261,7 +260,6 @@ class KotlinEvaluator(val codeFragment: KtCodeFragment, val sourcePosition: Sour
 
             try {
                 val mainClassAsmNode = ClassNode().apply { ClassReader(mainClassBytecode).accept(this, ClassReader.SKIP_CODE) }
-                val mainClassJdiName = mainClassAsmNode.name.replace('/', '.')
                 assert(mainClassAsmNode.methods.size == 1)
 
                 val methodToInvoke = mainClassAsmNode.methods[0]
