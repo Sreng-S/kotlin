@@ -23,18 +23,18 @@ import org.jetbrains.kotlin.idea.debugger.evaluate.classLoading.ClassLoadingAdap
 import org.jetbrains.kotlin.idea.debugger.evaluate.classLoading.ClassToLoad
 
 fun loadClassesSafely(evaluationContext: EvaluationContextImpl, classes: Collection<ClassToLoad>): ClassLoaderHandler? {
-    try {
-        return loadClasses(evaluationContext, classes)
+    return try {
+        loadClasses(evaluationContext, classes)
     } catch (e: Throwable) {
         LOG.debug("Failed to evaluate expression", e)
-        return null
+        null
     }
 }
 
 fun loadClasses(evaluationContext: EvaluationContextImpl, classes: Collection<ClassToLoad>): ClassLoaderHandler? {
-    if (classes.isEmpty()) return ClassLoaderHandler(evaluationContext.classLoader)
-
-    return ClassLoadingAdapter.loadClasses(evaluationContext, classes)?.apply {
-        evaluationContext.classLoader = this.reference
+    if (classes.isEmpty()) {
+        return null
     }
+
+    return ClassLoadingAdapter.loadClasses(evaluationContext, classes)
 }

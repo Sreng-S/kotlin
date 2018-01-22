@@ -80,7 +80,6 @@ import org.jetbrains.kotlin.resolve.AnalyzingUtils
 import org.jetbrains.kotlin.resolve.BindingContext
 import org.jetbrains.kotlin.resolve.BindingTrace
 import org.jetbrains.kotlin.resolve.jvm.JvmClassName
-import org.jetbrains.kotlin.resolve.jvm.diagnostics.ErrorsJvm
 import org.jetbrains.org.objectweb.asm.*
 import org.jetbrains.org.objectweb.asm.Opcodes.ASM5
 import org.jetbrains.org.objectweb.asm.Type
@@ -145,11 +144,7 @@ class KotlinEvaluator(val codeFragment: KtCodeFragment, val sourcePosition: Sour
             val classLoaderHandler = loadClassesSafely(context, compiledData.classes)
 
             val result = if (classLoaderHandler != null) {
-                try {
-                    evaluateWithCompilation(context, compiledData) ?: runEval4j(context, compiledData)
-                } finally {
-                    classLoaderHandler.dispose()
-                }
+                evaluateWithCompilation(context, compiledData, classLoaderHandler.reference) ?: runEval4j(context, compiledData)
             }
             else {
                 runEval4j(context, compiledData)
@@ -157,14 +152,7 @@ class KotlinEvaluator(val codeFragment: KtCodeFragment, val sourcePosition: Sour
 
             // If bytecode was taken from cache and exception was thrown - recompile bytecode and run eval4j again
             if (isCompiledDataFromCache && result is ExceptionThrown && result.kind == ExceptionThrown.ExceptionKind.BROKEN_CODE) {
-                // We need only lambda classes here cause we using only eval4j evaluation method
-                val classLoaderHandler = loadClasses(context, compiledData.classes.drop(1))
-
-                try {
-                    return runEval4j(context, extractAndCompile(codeFragment, sourcePosition, context)).toJdiValue(context)
-                } finally {
-                    classLoaderHandler?.dispose()
-                }
+                return runEval4j(context, extractAndCompile(codeFragment, sourcePosition, context)).toJdiValue(context)
             }
 
             return if (result is InterpreterResult) {
@@ -263,9 +251,12 @@ class KotlinEvaluator(val codeFragment: KtCodeFragment, val sourcePosition: Sour
             get() = classes.firstOrNull() ?: error(
                     "Can't find main class for " + sourcePosition.elementAt.getParentOfType<KtDeclaration>(strict = false))
 
-        private fun evaluateWithCompilation(context: EvaluationContextImpl, compiledData: CompiledDataDescriptor): Any? {
+        private fun evaluateWithCompilation(
+            context: EvaluationContextImpl,
+            compiledData: CompiledDataDescriptor,
+            classLoader: ClassLoaderReference
+        ): Any? {
             val vm = context.debugProcess.virtualMachineProxy.virtualMachine
-            val classLoader = context.classLoader ?: return null
             val mainClassBytecode = compiledData.mainClass.bytes
 
             try {
@@ -276,15 +267,15 @@ class KotlinEvaluator(val codeFragment: KtCodeFragment, val sourcePosition: Sour
                 val methodToInvoke = mainClassAsmNode.methods[0]
                 assert(methodToInvoke.parameters == null || methodToInvoke.parameters.isEmpty())
 
-                val mainClass = context.debugProcess.findClass(context, mainClassJdiName, classLoader) as ClassType
-
                 val thread = context.suspendContext.thread?.threadReference!!
                 val invokePolicy = context.suspendContext.getInvokePolicy()
                 val eval = JDIEval(vm, classLoader, thread, invokePolicy)
 
+                val mainClassValue = (eval.loadClass(Type.getObjectType(mainClassAsmNode.name), classLoader) as? ObjectValue)
+                val mainClass = (mainClassValue?.value as? ClassObjectReference)?.reflectedType() as? ClassType ?: return null
+
                 return vm.executeWithBreakpointsDisabled {
                     // Prepare the main class
-                    eval.loadClass(Type.getObjectType(mainClassAsmNode.name), classLoader)
 
                     val argumentTypes = Type.getArgumentTypes(methodToInvoke.desc)
                     val args = context.getArgumentsForEval4j(compiledData.parameters, argumentTypes)

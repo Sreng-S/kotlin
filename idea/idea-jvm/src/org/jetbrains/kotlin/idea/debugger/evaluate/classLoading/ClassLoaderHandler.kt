@@ -16,9 +16,6 @@
 
 package org.jetbrains.kotlin.idea.debugger.evaluate.classLoading
 
-import com.intellij.openapi.Disposable
 import com.sun.jdi.ClassLoaderReference
 
-open class ClassLoaderHandler(val reference: ClassLoaderReference?) : Disposable {
-    override fun dispose() {}
-}
+class ClassLoaderHandler(val reference: ClassLoaderReference)
