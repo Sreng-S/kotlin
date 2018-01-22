@@ -246,9 +246,33 @@ class KotlinEvaluator(val codeFragment: KtCodeFragment, val sourcePosition: Sour
             return fileName.substringBeforeLast(".class").replace("/", ".")
         }
 
-        private val CompiledDataDescriptor.mainClass
-            get() = classes.firstOrNull() ?: error(
-                    "Can't find main class for " + sourcePosition.elementAt.getParentOfType<KtDeclaration>(strict = false))
+        private fun CompiledDataDescriptor.findMainClass(): ClassToLoad {
+            for (clazz in classes) {
+                var found = false
+
+                ClassReader(clazz.bytes).accept(object : ClassVisitor(ASM5) {
+                    override fun visitMethod(
+                        access: Int,
+                        name: String?,
+                        desc: String?,
+                        signature: String?,
+                        exceptions: Array<out String>?
+                    ): MethodVisitor? {
+                        if (name == GENERATED_FUNCTION_NAME) {
+                            found = true
+                        }
+
+                        return super.visitMethod(access, name, desc, signature, exceptions)
+                    }
+                }, ClassReader.SKIP_CODE or ClassReader.SKIP_FRAMES or ClassReader.SKIP_DEBUG)
+
+                if (found) {
+                    return clazz
+                }
+            }
+
+            error("Can't find main class for " + sourcePosition.elementAt.getParentOfType<KtDeclaration>(strict = false))
+        }
 
         private fun evaluateWithCompilation(
             context: EvaluationContextImpl,
@@ -256,7 +280,7 @@ class KotlinEvaluator(val codeFragment: KtCodeFragment, val sourcePosition: Sour
             classLoader: ClassLoaderReference
         ): Any? {
             val vm = context.debugProcess.virtualMachineProxy.virtualMachine
-            val mainClassBytecode = compiledData.mainClass.bytes
+            val mainClassBytecode = compiledData.findMainClass().bytes
 
             try {
                 val mainClassAsmNode = ClassNode().apply { ClassReader(mainClassBytecode).accept(this, ClassReader.SKIP_CODE) }
@@ -298,7 +322,7 @@ class KotlinEvaluator(val codeFragment: KtCodeFragment, val sourcePosition: Sour
             var resultValue: InterpreterResult? = null
 
             // assert [0] with some context
-            val mainClassBytecode = compiledData.mainClass.bytes
+            val mainClassBytecode = compiledData.findMainClass().bytes
 
             ClassReader(mainClassBytecode).accept(object : ClassVisitor(ASM5) {
                 override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<out String>?): MethodVisitor? {
