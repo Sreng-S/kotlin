@@ -118,39 +118,6 @@
         <fail message="Either specify pre_build or post_build"/>
     </target>
 
-    <property name="teamcity.build.branch" value=""/>
-
-    <condition property="need.remove.artifacts" value="true">
-        <and>
-            <matches pattern="rri?/.*" string="${teamcity.build.branch}"/>
-            <not>
-                <matches pattern="rri?/internal/.*" string="${teamcity.build.branch}"/>
-            </not>
-        </and>
-    </condition>
-
-    <target name="remove_internal_artifacts"
-            description="Remove internal artifacts for rri?/* branches, but store them for rri?/internal/*"
-            if="need.remove.artifacts">
-        <echo message="Remove internal artifacts" />
-
-        <delete failonerror="false" verbose="true">
-            <fileset dir="dist">
-                <include name="kotlin-compiler-before-shrink.jar"/>
-                <include name="kotlin-for-upsource.jar"/>
-                <include name="kotlin-for-upsource-sources.jar"/>
-                <include name="kotlin-test-data.zip"/>
-            </fileset>
-            <fileset dir="out/artifacts/internal">
-                <include name="kotlin-ide-common.jar"/>
-            </fileset>
-        </delete>
-    </target>
-
-    <target name="dont_remove_internal_artifacts" unless="need.remove.artifacts">
-        <echo message="Internal artifacts left untouched"/>
-    </target>
-
     <macrodef name="patch_plugin_xml">
         <attribute name="plugin.xml" />
         <sequential>
