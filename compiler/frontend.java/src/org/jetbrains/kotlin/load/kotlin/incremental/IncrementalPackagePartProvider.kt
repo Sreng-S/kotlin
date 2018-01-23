@@ -19,6 +19,7 @@ package org.jetbrains.kotlin.load.kotlin.incremental
 import org.jetbrains.kotlin.load.kotlin.ModuleMapping
 import org.jetbrains.kotlin.load.kotlin.PackagePartProvider
 import org.jetbrains.kotlin.load.kotlin.incremental.components.IncrementalCache
+import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.serialization.deserialization.DeserializationConfiguration
 import org.jetbrains.kotlin.storage.StorageManager
 
@@ -38,5 +39,9 @@ class IncrementalPackagePartProvider(
     override fun findPackageParts(packageFqName: String): List<String> {
         return (moduleMappings().mapNotNull { it.findPackageParts(packageFqName) }.flatMap { it.parts } +
                 parent.findPackageParts(packageFqName)).distinct()
+    }
+
+    override fun getAnnotationsOnBinaryModule(moduleName: String): List<ClassId> {
+        return parent.getAnnotationsOnBinaryModule(moduleName)
     }
 }

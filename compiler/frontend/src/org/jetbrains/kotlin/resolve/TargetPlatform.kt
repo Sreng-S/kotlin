@@ -82,8 +82,7 @@ abstract class TargetPlatform(val platformName: String) {
 private val DEFAULT_DECLARATION_CHECKERS = listOf(
     DataClassDeclarationChecker(), ConstModifierChecker, UnderscoreChecker, InlineParameterChecker, InfixModifierChecker(),
     SinceKotlinAnnotationValueChecker, RequireKotlinAnnotationValueChecker, ReifiedTypeParameterAnnotationChecker(),
-    DynamicReceiverChecker, DelegationChecker(), KClassWithIncorrectTypeArgumentChecker, SuspendOperatorsCheckers,
-    ExperimentalUsageChecker.Overrides
+    DynamicReceiverChecker, DelegationChecker(), KClassWithIncorrectTypeArgumentChecker, SuspendOperatorsCheckers
 )
 
 private val DEFAULT_CALL_CHECKERS = listOf(
@@ -92,12 +91,11 @@ private val DEFAULT_CALL_CHECKERS = listOf(
     ConstructorHeaderCallChecker, ProtectedConstructorCallChecker, ApiVersionCallChecker,
     CoroutineSuspendCallChecker, BuilderFunctionsCallChecker, DslScopeViolationCallChecker, MissingDependencyClassChecker,
     CallableReferenceCompatibilityChecker(), LateinitIntrinsicApplicabilityChecker,
-    UnderscoreUsageChecker, AssigningNamedArgumentToVarargChecker(), ExperimentalUsageChecker
+    UnderscoreUsageChecker, AssigningNamedArgumentToVarargChecker()
 )
 private val DEFAULT_TYPE_CHECKERS = emptyList<AdditionalTypeChecker>()
 private val DEFAULT_CLASSIFIER_USAGE_CHECKERS = listOf(
-    DeprecatedClassifierUsageChecker(), ApiVersionClassifierUsageChecker, MissingDependencyClassChecker.ClassifierUsage,
-    ExperimentalUsageChecker.ClassifierUsage
+    DeprecatedClassifierUsageChecker(), ApiVersionClassifierUsageChecker, MissingDependencyClassChecker.ClassifierUsage
 )
 private val DEFAULT_ANNOTATION_CHECKERS = listOf<AdditionalAnnotationChecker>(
     ExperimentalUsageChecker.ExperimentalDeclarationChecker

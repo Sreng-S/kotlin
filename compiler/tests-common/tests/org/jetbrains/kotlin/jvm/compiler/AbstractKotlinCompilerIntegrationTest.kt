@@ -99,9 +99,11 @@ abstract class AbstractKotlinCompilerIntegrationTest : TestCaseWithTmpdir() {
      *
      * @return the path to the corresponding .meta.js file, i.e. "[libraryName].meta.js"
      */
-    protected fun compileJsLibrary(libraryName: String): File {
+    protected fun compileJsLibrary(libraryName: String, additionalOptions: List<String> = emptyList()): File {
         val destination = File(tmpdir, "$libraryName.js")
-        val output = compileKotlin(libraryName, destination, compiler = K2JSCompiler(), expectedFileName = null)
+        val output = compileKotlin(
+            libraryName, destination, compiler = K2JSCompiler(), additionalOptions = additionalOptions, expectedFileName = null
+        )
         assertEquals(normalizeOutput("" to ExitCode.OK), normalizeOutput(output))
         return File(tmpdir, "$libraryName.meta.js")
     }

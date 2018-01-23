@@ -18,6 +18,7 @@ package kotlin.reflect.jvm.internal.components
 
 import org.jetbrains.kotlin.load.kotlin.ModuleMapping
 import org.jetbrains.kotlin.load.kotlin.PackagePartProvider
+import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.serialization.deserialization.DeserializationConfiguration
 import java.util.concurrent.ConcurrentHashMap
 
@@ -40,5 +41,10 @@ class RuntimePackagePartProvider(private val classLoader: ClassLoader) : Package
 
     override fun findPackageParts(packageFqName: String): List<String> {
         return module2Mapping.values.mapNotNull { it.findPackageParts(packageFqName) }.flatMap { it.parts }.distinct()
+    }
+
+    override fun getAnnotationsOnBinaryModule(moduleName: String): List<ClassId> {
+        // TODO: load annotations from resource files
+        return emptyList()
     }
 }
