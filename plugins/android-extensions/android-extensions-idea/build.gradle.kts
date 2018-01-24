@@ -54,6 +54,7 @@ dependencies {
     testRuntime(intellijPluginDep("java-decompiler"))
     //testRuntime(intellijPluginDep("maven"))
     testRuntime(intellijPluginDep("android"))
+    testRuntime(intellijPluginDep("smali"))
 
     androidSdk(project(":custom-dependencies:android-sdk", configuration = "androidSdk"))
     androidJar(project(":custom-dependencies:android-sdk", configuration = "androidJar"))
