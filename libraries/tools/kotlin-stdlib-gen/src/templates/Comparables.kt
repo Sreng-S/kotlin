@@ -163,12 +163,16 @@ object ComparableOps : TemplateGroupBase() {
                 """Returns the smaller of two values."""
             }
             var mathPrefix = "Math"
-            on(Platform.JS) { mathPrefix = "kotlin.js.Math" }
+            var convertBack = "to$primitive()"
+            on(Platform.JS) {
+                mathPrefix = "kotlin.js.Math"
+                convertBack = "unsafeCast<$primitive>()"
+            }
             body {
                 "return $mathPrefix.min(a, b)"
             }
             if (primitive in shortIntPrimitives) {
-                body { "return $mathPrefix.min(a.toInt(), b.toInt()).to$primitive()" }
+                body { "return $mathPrefix.min(a.toInt(), b.toInt()).$convertBack" }
             }
             on(Platform.JS) {
                 if (primitive == PrimitiveType.Long) {
@@ -205,7 +209,7 @@ object ComparableOps : TemplateGroupBase() {
             if (primitive in shortIntPrimitives) {
                 body { "return Math.min(a.toInt(), Math.min(b.toInt(), c.toInt())).to$primitive()" }
                 on(Platform.JS) {
-                    body { "return kotlin.js.Math.min(a.toInt(), b.toInt(), c.toInt()).to$primitive()" }
+                    body { "return kotlin.js.Math.min(a.toInt(), b.toInt(), c.toInt()).unsafeCast<$primitive>()" }
                 }
             }
             else if (primitive != PrimitiveType.Long) {
@@ -273,12 +277,16 @@ object ComparableOps : TemplateGroupBase() {
                 """Returns the greater of two values."""
             }
             var mathPrefix = "Math"
-            on(Platform.JS) { mathPrefix = "kotlin.js.Math" }
+            var convertBack = "to$primitive()"
+            on(Platform.JS) {
+                mathPrefix = "kotlin.js.Math"
+                convertBack = "unsafeCast<$primitive>()"
+            }
             body {
                 "return $mathPrefix.max(a, b)"
             }
             if (primitive in shortIntPrimitives) {
-                body { "return $mathPrefix.max(a.toInt(), b.toInt()).to$primitive()" }
+                body { "return $mathPrefix.max(a.toInt(), b.toInt()).$convertBack" }
             }
             on(Platform.JS) {
                 if (primitive == PrimitiveType.Long) {
@@ -315,7 +323,7 @@ object ComparableOps : TemplateGroupBase() {
             if (primitive in shortIntPrimitives) {
                 body { "return Math.max(a.toInt(), Math.max(b.toInt(), c.toInt())).to$primitive()" }
                 on(Platform.JS) {
-                    body { "return kotlin.js.Math.max(a.toInt(), b.toInt(), c.toInt()).to$primitive()" }
+                    body { "return kotlin.js.Math.max(a.toInt(), b.toInt(), c.toInt()).unsafeCast<$primitive>()" }
                 }
             }
             else if (primitive != PrimitiveType.Long) {
