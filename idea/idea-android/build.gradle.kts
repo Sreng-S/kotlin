@@ -39,7 +39,7 @@ dependencies {
     testCompile(intellijDep()) { includeJars("gson", rootProject = rootProject) }
     testCompile(intellijPluginDep("properties"))
     testCompileOnly(intellijPluginDep("android")) {
-        includeJars("android", "android-common", "common", "sdk-common", "sdklib", "sdk-tools", "layoutlib-api")
+        includeJars("android", "android-common", "common", "sdk-common", "sdklib", "sdk-tools", "layoutlib-api", rootProject = rootProject)
     }
 
     testRuntime(projectDist(":kotlin-reflect"))
