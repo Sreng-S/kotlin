@@ -6,6 +6,7 @@ extra["versions.idea.NodeJS"] = "172.3757.32"
 //extra["versions.androidStudioBuild"] = "173.4506631"
 
 val gradleJars = listOf(
+    "gradle-api",
     "gradle-tooling-api",
     "gradle-base-services",
     "gradle-wrapper",
@@ -22,6 +23,18 @@ val platform = androidStudioVersion?.let { "AS" + it }
         ?: extra["versions.intellijSdk"].toString().substringBefore('.')
 
 when (platform) {
+    "181" -> {
+        extra["versions.jar.guava"] = "21.0"
+        extra["versions.jar.groovy-all"] = "2.4.12"
+        extra["versions.jar.lombok-ast"] = "0.2.3"
+        extra["versions.jar.swingx-core"] = "1.6.2-2"
+        extra["versions.jar.kxml2"] = "2.3.0"
+        extra["versions.jar.streamex"] = "0.6.5"
+        extra["versions.jar.gson"] = "2.8.2"
+        for (jar in gradleJars) {
+            extra["versions.jar.$jar"] = "4.4"
+        }
+    }
     "173" -> {
         extra["versions.jar.guava"] = "21.0"
         extra["versions.jar.groovy-all"] = "2.4.12"
