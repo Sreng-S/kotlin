@@ -92,6 +92,7 @@ dependencies {
     testRuntime(intellijPluginDep("coverage"))
     //testRuntime(intellijPluginDep("maven"))
     testRuntime(intellijPluginDep("android"))
+    testRuntime(intellijPluginDep("smali"))
     testRuntime(intellijPluginDep("testng"))
 }
 
