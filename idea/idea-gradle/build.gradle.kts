@@ -47,7 +47,7 @@ dependencies {
     testRuntime(intellijPluginDep("coverage")) { includeJars("jacocoant") }
     testRuntime(intellijPluginDep("maven"))
     testRuntime(intellijPluginDep("android"))
-
+    testRuntime(intellijPluginDep("smali"))
     androidSdk(project(":custom-dependencies:android-sdk", configuration = "androidSdk"))
 }
 
