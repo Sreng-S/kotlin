@@ -26,7 +26,7 @@ public fun <T: Comparable<T>> maxOf(a: T, b: T): T {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Byte, b: Byte): Byte {
-    return kotlin.js.Math.max(a.toInt(), b.toInt()).unsafeCast<Byte>()
+    return Math.max(a.toInt(), b.toInt()).unsafeCast<Byte>()
 }
 
 /**
@@ -35,7 +35,7 @@ public inline fun maxOf(a: Byte, b: Byte): Byte {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Short, b: Short): Short {
-    return kotlin.js.Math.max(a.toInt(), b.toInt()).unsafeCast<Short>()
+    return Math.max(a.toInt(), b.toInt()).unsafeCast<Short>()
 }
 
 /**
@@ -44,7 +44,7 @@ public inline fun maxOf(a: Short, b: Short): Short {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Int, b: Int): Int {
-    return kotlin.js.Math.max(a, b)
+    return Math.max(a, b)
 }
 
 /**
@@ -62,7 +62,7 @@ public inline fun maxOf(a: Long, b: Long): Long {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Float, b: Float): Float {
-    return kotlin.js.Math.max(a, b)
+    return Math.max(a, b)
 }
 
 /**
@@ -71,7 +71,7 @@ public inline fun maxOf(a: Float, b: Float): Float {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Double, b: Double): Double {
-    return kotlin.js.Math.max(a, b)
+    return Math.max(a, b)
 }
 
 /**
@@ -88,7 +88,7 @@ public fun <T: Comparable<T>> maxOf(a: T, b: T, c: T): T {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Byte, b: Byte, c: Byte): Byte {
-    return kotlin.js.Math.max(a.toInt(), b.toInt(), c.toInt()).unsafeCast<Byte>()
+    return Math.max(a.toInt(), b.toInt(), c.toInt()).unsafeCast<Byte>()
 }
 
 /**
@@ -97,7 +97,7 @@ public inline fun maxOf(a: Byte, b: Byte, c: Byte): Byte {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Short, b: Short, c: Short): Short {
-    return kotlin.js.Math.max(a.toInt(), b.toInt(), c.toInt()).unsafeCast<Short>()
+    return Math.max(a.toInt(), b.toInt(), c.toInt()).unsafeCast<Short>()
 }
 
 /**
@@ -106,7 +106,7 @@ public inline fun maxOf(a: Short, b: Short, c: Short): Short {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Int, b: Int, c: Int): Int {
-    return kotlin.js.Math.max(a, b, c)
+    return Math.max(a, b, c)
 }
 
 /**
@@ -124,7 +124,7 @@ public inline fun maxOf(a: Long, b: Long, c: Long): Long {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Float, b: Float, c: Float): Float {
-    return kotlin.js.Math.max(a, b, c)
+    return Math.max(a, b, c)
 }
 
 /**
@@ -133,7 +133,7 @@ public inline fun maxOf(a: Float, b: Float, c: Float): Float {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun maxOf(a: Double, b: Double, c: Double): Double {
-    return kotlin.js.Math.max(a, b, c)
+    return Math.max(a, b, c)
 }
 
 /**
@@ -168,7 +168,7 @@ public fun <T: Comparable<T>> minOf(a: T, b: T): T {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Byte, b: Byte): Byte {
-    return kotlin.js.Math.min(a.toInt(), b.toInt()).unsafeCast<Byte>()
+    return Math.min(a.toInt(), b.toInt()).unsafeCast<Byte>()
 }
 
 /**
@@ -177,7 +177,7 @@ public inline fun minOf(a: Byte, b: Byte): Byte {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Short, b: Short): Short {
-    return kotlin.js.Math.min(a.toInt(), b.toInt()).unsafeCast<Short>()
+    return Math.min(a.toInt(), b.toInt()).unsafeCast<Short>()
 }
 
 /**
@@ -186,7 +186,7 @@ public inline fun minOf(a: Short, b: Short): Short {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Int, b: Int): Int {
-    return kotlin.js.Math.min(a, b)
+    return Math.min(a, b)
 }
 
 /**
@@ -204,7 +204,7 @@ public inline fun minOf(a: Long, b: Long): Long {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Float, b: Float): Float {
-    return kotlin.js.Math.min(a, b)
+    return Math.min(a, b)
 }
 
 /**
@@ -213,7 +213,7 @@ public inline fun minOf(a: Float, b: Float): Float {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Double, b: Double): Double {
-    return kotlin.js.Math.min(a, b)
+    return Math.min(a, b)
 }
 
 /**
@@ -230,7 +230,7 @@ public fun <T: Comparable<T>> minOf(a: T, b: T, c: T): T {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Byte, b: Byte, c: Byte): Byte {
-    return kotlin.js.Math.min(a.toInt(), b.toInt(), c.toInt()).unsafeCast<Byte>()
+    return Math.min(a.toInt(), b.toInt(), c.toInt()).unsafeCast<Byte>()
 }
 
 /**
@@ -239,7 +239,7 @@ public inline fun minOf(a: Byte, b: Byte, c: Byte): Byte {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Short, b: Short, c: Short): Short {
-    return kotlin.js.Math.min(a.toInt(), b.toInt(), c.toInt()).unsafeCast<Short>()
+    return Math.min(a.toInt(), b.toInt(), c.toInt()).unsafeCast<Short>()
 }
 
 /**
@@ -248,7 +248,7 @@ public inline fun minOf(a: Short, b: Short, c: Short): Short {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Int, b: Int, c: Int): Int {
-    return kotlin.js.Math.min(a, b, c)
+    return Math.min(a, b, c)
 }
 
 /**
@@ -266,7 +266,7 @@ public inline fun minOf(a: Long, b: Long, c: Long): Long {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Float, b: Float, c: Float): Float {
-    return kotlin.js.Math.min(a, b, c)
+    return Math.min(a, b, c)
 }
 
 /**
@@ -275,7 +275,7 @@ public inline fun minOf(a: Float, b: Float, c: Float): Float {
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 public inline fun minOf(a: Double, b: Double, c: Double): Double {
-    return kotlin.js.Math.min(a, b, c)
+    return Math.min(a, b, c)
 }
 
 /**
