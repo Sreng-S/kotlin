@@ -59,7 +59,7 @@ public suspend inline fun <T> suspendCoroutineUninterceptedOrReturn(crossinline 
  */
 @SinceKotlin("1.2")
 @kotlin.internal.InlineOnly
-inline fun <T> Continuation<T>.intercepted(): Continuation<T> =
+public inline fun <T> Continuation<T>.intercepted(): Continuation<T> =
         throw NotImplementedError("Implementation of intercepted is intrinsic")
 
 /**
@@ -77,7 +77,7 @@ inline fun <T> Continuation<T>.intercepted(): Continuation<T> =
     ReplaceWith("coroutineContext", "kotlin.coroutines.experimental.coroutineContext"),
     DeprecationLevel.WARNING
 )
-suspend inline val coroutineContext: CoroutineContext
+public suspend inline val coroutineContext: CoroutineContext
     get() {
         throw NotImplementedError("Implemented as intrinsic")
     }
@@ -87,7 +87,7 @@ suspend inline val coroutineContext: CoroutineContext
  * the execution was suspended and will not return any result immediately.
  */
 @SinceKotlin("1.1")
-val COROUTINE_SUSPENDED: Any = Any()
+public val COROUTINE_SUSPENDED: Any = Any()
 
 // JVM declarations
 
@@ -103,7 +103,7 @@ val COROUTINE_SUSPENDED: Any = Any()
  */
 @SinceKotlin("1.1")
 @kotlin.jvm.JvmVersion
-fun <T> (suspend () -> T).createCoroutineUnchecked(
+public fun <T> (suspend () -> T).createCoroutineUnchecked(
         completion: Continuation<T>
 ): Continuation<Unit> =
         if (this !is kotlin.coroutines.experimental.jvm.internal.CoroutineImpl)
@@ -126,7 +126,7 @@ fun <T> (suspend () -> T).createCoroutineUnchecked(
  */
 @SinceKotlin("1.1")
 @kotlin.jvm.JvmVersion
-fun <R, T> (suspend R.() -> T).createCoroutineUnchecked(
+public fun <R, T> (suspend R.() -> T).createCoroutineUnchecked(
         receiver: R,
         completion: Continuation<T>
 ): Continuation<Unit> =
